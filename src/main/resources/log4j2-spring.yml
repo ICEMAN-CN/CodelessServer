@@ -1,0 +1,53 @@
+#共有8个级别，按照从低到高为：ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF。
+Configuration:
+  status: info
+  monitorInterval: 30
+
+  Properties:
+    Property:
+      - name: log.level.console
+        value: info
+      - name: log.path
+        value: logs
+      - name: project.name
+        value: epic-report
+      - name: log.pattern
+        value: "%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-30.30C{1.} : %m%n"
+      - name: APP_NAME
+        value: sales
+      - name: ServerPort
+        value: ${server:port}
+
+  Appenders:
+    Console: #输出到控制台
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: ${log.pattern}
+    #启动日志
+    RollingFile:
+      - name: ROLLING_FILE
+        fileName: ${log.path}/${project.name}.log
+        filePattern: "${log.path}/historyRunLog/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+        immediateFlush: false
+        PatternLayout:
+          pattern: ${log.pattern}
+        Filters:
+          #一定要先去除不接受的日志级别，然后获取需要接受的日志级别
+          ThresholdFilter:
+            - level: FATAL
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        Policies:
+          TimeBasedTriggeringPolicy: #按天分类
+            modulate: true
+            interval: 1
+        DefaultRolloverStrategy: #文件最多100个
+          max: 100
+  Loggers:
+    Root:
+      level: info
+      includeLocation: true
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: ROLLING_FILE
