@@ -5,56 +5,53 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.codeless.promotion.enums.PromotionLinkStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
-* 推广链接基本信息
+* 推广链接点击信息
  * @author wangdongyang
  */
 @Data
-@TableName(value = "promotion_link")
-public class PromotionLink implements Serializable {
+@TableName(value = "promotion_link_click")
+public class PromotionLinkClick implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty("ID")
     private Long id;
 
-    @TableField(value = "clid_b1")
-    @ApiModelProperty("推广链接的唯一标识，按钮1的ID")
-    private String clIdForButton1;
-
-    @TableField(value = "clid_b2")
-    @ApiModelProperty("推广链接的唯一标识，按钮2的ID")
-    private String clIdForButton2;
-
-    // @wdy todo 先固定为email、web等字符串，后续需要再扩充标识
-    @TableField(value = "refid")
-    @ApiModelProperty("推广链接来源标识，用于标记链接来源渠道：邮件、网页")
-    private String refId;
-
     @TableField(value = "customer_email")
     @ApiModelProperty("客户邮件")
     private String customerEmail;
 
-    // @wdy todo 预留字段，固定为abc
+//    @TableField(value = "anonymous_customer_id")
+//    @ApiModelProperty("匿名客户ID，用于web端的点击采集")
+//    private Long anonymousCustomerId;
+
+    @TableField(value = "clid")
+    @ApiModelProperty("推广链接的唯一标识")
+    private String clId;
+
+    @TableField(value = "refid")
+    @ApiModelProperty("推广链接来源标识，用于标记链接来源渠道：邮件、网页")
+    private String refId;
+
     @TableField(value = "business_code")
     @ApiModelProperty("业务码，用于标识业务")
     private String businessCode;
 
-    // @wdy todo 预留字段，用于定时过期等判断
-    /**
-     * @see PromotionLinkStatus
-     */
-    @TableField(value = "status")
-    @ApiModelProperty(value = "推广链接状态")
-    private Integer status = PromotionLinkStatus.NORMAL.getValue();
+    // @wdy todo 后续需要分析不同地域用户行为分布，可以扩充该字段
+//    @TableField(value = "ip_address_id")
+//    @ApiModelProperty("客户IP地址ID")
+//    private Long ipAddressId;
+
+    @TableField(value = "ip_address")
+    @ApiModelProperty("客户IP地址")
+    private String ipAddress;
 
     @TableField(value = "create_time")
     @ApiModelProperty(value = "创建时间")

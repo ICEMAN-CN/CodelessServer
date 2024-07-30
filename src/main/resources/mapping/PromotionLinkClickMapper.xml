@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeless.promotion.mapper.PromotionLinkClickMapper">
+    <insert id="insertBatchClickEvents" parameterType="com.codeless.promotion.entity.PromotionLinkClick">
+        INSERT INTO promotion_link_click
+            ( `customer_email`, `clid`, `refid`, `business_code`, `ip_address`, `create_time`)
+        VALUES
+        <foreach collection="list" item="event" separator=",">
+            (#{event.customerEmail}, #{event.clId}, #{event.refId}, #{event.businessCode},
+            #{event.ipAddress}, #{event.createTime})
+        </foreach>
+    </insert>
+
+</mapper>

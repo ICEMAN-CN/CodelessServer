@@ -22,7 +22,8 @@ public class IpAddress {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @TableField(value = "字符串内容")
+    @TableField(value = "content")
+    @ApiModelProperty(value = "字符串内容")
     private String content;
 
     @TableField(value = "create_time")

@@ -26,8 +26,8 @@ spring:
         mysql:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://127.0.0.1:3306/codeless?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&rewriteBatchedStatements=true
-          username: codeless
-          password: 7NC58yzPBxTCwjFG
+          username: root
+          password: 7227e6d5b2996f85
       druid:
         initial-size: 5
         max-active: 100
@@ -62,10 +62,10 @@ spring:
 
   # ====================Redis================================
   redis:
-    database: 7
-    host: 192.168.0.25
+    database: 0
+    host: 127.0.0.1
     port: 6379
-    password: pwdtest
+    password: daqingniu
     timeout: 8000
     lettuce:
       pool:
@@ -135,3 +135,9 @@ knife4j:
     enable: false
     username: gamersky
     password: q1w2E#R$
+
+# ====================RocketMq=========================
+rocketmq:
+  name-server: 172.17.0.1:9876
+  producer:
+    group: GameSkyComment
