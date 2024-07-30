@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gamersky</groupId>
-	<artifactId>epic-report</artifactId>
+	<groupId>com.codeless</groupId>
+	<artifactId>promotion</artifactId>
 	<version>1.0.0</version>
-	<name>epic-report</name>
-	<description>2022年报项目Epic数据服务</description>
+	<name>promotion</name>
+	<description>codeless take home assignment</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -201,7 +201,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.3.7.RELEASE</version>
 				<configuration>
-					<mainClass>com.gamersky.epicreport.EpicReportApplication</mainClass>
+					<mainClass>com.codeless.promotion.PromotionApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

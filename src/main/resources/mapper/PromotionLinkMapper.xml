@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeless.promotion.mapper.PromotionLinkMapper">
+
+<!--    &lt;!&ndash; 查询评论总数 &ndash;&gt;-->
+<!--    <select id="getDayTotalCount" parameterType="String" resultType="Integer">-->
+<!--        SELECT-->
+<!--            count(1)-->
+<!--        FROM `gs_news_comment`-->
+<!--        where-->
+<!--            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--        and-->
+<!--            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 查询评论总人数 &ndash;&gt;-->
+<!--    <select id="getDayTotalUserCount" resultType="Integer">-->
+<!--        SELECT-->
+<!--            count(distinct(`user_id`))-->
+<!--        FROM `gs_news_comment`-->
+<!--        where-->
+<!--            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--          and-->
+<!--            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 查询PC评论总数 &ndash;&gt;-->
+<!--    <select id="getPcDayTotalCount" resultType="Integer">-->
+<!--        SELECT-->
+<!--            count(1)-->
+<!--        FROM `gs_news_comment`-->
+<!--        where-->
+<!--            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--          and-->
+<!--            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--          and-->
+<!--            `comment_source` = 0-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 查询PC评论总人数 &ndash;&gt;-->
+<!--    <select id="getPcDayTotalUserCount" resultType="Integer">-->
+<!--        SELECT-->
+<!--            count(distinct(`user_id`))-->
+<!--        FROM `gs_news_comment`-->
+<!--        where-->
+<!--            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--          and-->
+<!--            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>-->
+<!--          and-->
+<!--            `comment_source` = 0-->
+<!--    </select>-->
+
+<!--    <select id="getTotalCommentStatisticsInfo" resultType="com.gamersky.comment.entity.CommentStatistics">-->
+<!--        SELECT-->
+<!--            content.content_type as content_type,-->
+<!--            content.sub_content_type as sub_content_type,-->
+<!--            count(1) as total_count,-->
+<!--            count(DISTINCT user_id) as total_user_count,-->
+<!--            SUM(IF(comment.comment_source = 0, 1, 0)) as pc_total_count,-->
+<!--            count(DISTINCT IF(comment.comment_source = 0,comment.user_id,NULL)) as pc_total_user_count-->
+<!--        FROM gs_news_comment comment-->
+<!--            LEFT JOIN gs_comment_content content ON content.content_id = comment.content_id-->
+<!--        WHERE comment.create_time &gt;= str_to_date(#{begin},'%Y-%m-%d %H:%i:%s')-->
+<!--          AND comment.create_time &lt;= str_to_date(#{end},'%Y-%m-%d %H:%i:%s')-->
+<!--        GROUP BY content.content_type,-->
+<!--                 content.sub_content_type-->
+<!--    </select>-->
+
+</mapper>

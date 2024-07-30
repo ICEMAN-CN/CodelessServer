@@ -1,7 +1,7 @@
 server:
   port: 9621
   servlet:
-    context-path: /epic
+    context-path: /codeless
     encoding:
       force: true
       enabled: true
@@ -25,10 +25,9 @@ spring:
       datasource:
         mysql:
           driver-class-name: com.mysql.cj.jdbc.Driver
-#          epic_report_year
-          url: jdbc:mysql://192.168.0.25:3306/crawler_epic_game?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&rewriteBatchedStatements=true
-          username: root
-          password: ktxb!TUil9R
+          url: jdbc:mysql://127.0.0.1:3306/codeless?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&rewriteBatchedStatements=true
+          username: codeless
+          password: 7NC58yzPBxTCwjFG
       druid:
         initial-size: 5
         max-active: 100
@@ -84,7 +83,7 @@ logging:
 # ====================MyBatis-Plus=========================
 mybatis-plus:
   mapper-locations: classpath*:/mapping/*.xml
-  typeAliasesPackage: com.gamersky.epicreport.entity
+  typeAliasesPackage: com.codeless.promotion.entity
   global-config:
     db-config:
       id-type: INPUT

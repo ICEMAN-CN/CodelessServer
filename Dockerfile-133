@@ -1,7 +1,0 @@
-FROM openjdk:11
-
-EXPOSE 9621
-
-ADD target/epic-report-1.0.0.jar epic-report-1.0.0.jar
-
-ENTRYPOINT ["java","-Dlog4j2.formatMsgNoLookups=true","-Ddruid.mysql.usePingMethod=false","--illegal-access=permit","-server","-Xms2048m","-Xmx4096m","-jar","epic-report-1.0.0.jar","--spring.profiles.active=test"]
