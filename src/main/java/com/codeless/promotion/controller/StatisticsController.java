@@ -163,6 +163,11 @@ public class StatisticsController {
             finalItems.sort((o1, o2) -> {
                 return o2.getDate().compareTo(o1.getDate());
             });
+            if (req.getStatisticsType().equals("emailClickButtonTotal") || req.getStatisticsType().equals("emailClickTotalData")) {
+                if (finalItems.size() > 10) {
+
+                }
+            }
             resp.setList(finalItems);
             return JsonResult.ok(resp);
         }

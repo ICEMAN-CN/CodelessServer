@@ -298,8 +298,8 @@ public class LinkClickServiceImpl extends ServiceImpl<PromotionLinkClickMapper, 
             String begin = DateUtil.format(yesterday, DatePattern.NORM_DATETIME_PATTERN);
             String end = DateUtil.format(yesterday2, DatePattern.NORM_DATETIME_PATTERN);
             begin = "2024-07-31 00:00:00";
-            begin = "2024-08-01 00:00:00";
-            end = "2024-08-02 00:00:00";
+            begin = "2024-07-30 00:00:00";
+            end = "2024-07-31 00:00:00";
             List<ClickStatistics> list1 =  clickMapper.repeatOpenButtonDay(begin, end);
             list1.forEach(repeatOpenButtonDayData -> {
                 repeatOpenButtonDayData.setStatisticsType("repeatOpenButtonDay");

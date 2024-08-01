@@ -47,12 +47,12 @@ public class LinkController {
     /**
      * web来源UUID
      */
-    public static final String WEB_REF_ID = "da845324be234f7e8785c665a91769cf";
+    public static final String WEB_REF_ID = "80442b807b5f29e573857b1432344248";
 
     /**
      * email来源UUID
      */
-    public static final String EMAIL_REF_ID = "80442b807b5f29e573857b1432344248";
+    public static final String EMAIL_REF_ID = "da845324be234f7e8785c665a91769cf";
 
     @ApiOperation("批量生成email推广链接，因为有两个按钮，同一个邮件生成双份的链接")
     @PostMapping("/email/batchAdd")
