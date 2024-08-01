@@ -14,6 +14,8 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+import static com.codeless.promotion.controller.LinkController.WEB_REF_ID;
+
 /**
 * 推广链接基本信息
  * @author wangdongyang
@@ -38,6 +40,17 @@ public class PromotionLink implements Serializable {
     @TableField(value = "refid")
     @ApiModelProperty("推广链接来源标识，用于标记链接来源渠道：邮件、网页")
     private String refId;
+
+    public String getRefSource() {
+        if (refId == null) {
+            return "";
+        }
+        return refId.equals(WEB_REF_ID) ? "web" : "email";
+    }
+
+    @TableField(exist = false)
+    @ApiModelProperty("推广链接来源标识")
+    private String refSource;
 
     @TableField(value = "customer_email")
     @ApiModelProperty("客户邮箱")

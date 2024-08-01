@@ -41,8 +41,8 @@ public class LinkManageServiceImpl extends ServiceImpl<PromotionLinkMapper, Prom
      * web url 模板
      * @wdy todo 打开web端页面，然后vue从链接获取参数，拼接到网页按钮行为上
      */
-    public static final String WEB_URL_TEMPLATE = "http://daqingniu.com/codeless/link/click?refid=" + WEB_REF_ID + "&clid={}";
-
+    public static final String WEB_URL_TEMPLATE = "http://49.232.70.73/codeless/#/homepage?refid=" + WEB_REF_ID + "&clidb1=ccclid1&clidb2=ccclid2";
+//    http://49.232.70.73/codeless/#/homepage?refid=80442b807b5f29e573857b1432344248&clidb1=fe2bb696a730486e93108ebc4ab6be5c&clidb2=23d5150a0c054923bf78630396d30358
     /**
      * email 文本 模板
      */
@@ -59,13 +59,13 @@ public class LinkManageServiceImpl extends ServiceImpl<PromotionLinkMapper, Prom
             "<div style=\"font-size: 20px; text-align: center\">" +
             "    <a target=\"_blank\"" +
             "       style=\"background-color:#009B5B;border-bottom:0px solid #009B5B;border-left:0px solid #009B5B;border-radius:4px;border-right:0px solid #009B5B;border-top:0px solid #009B5B;color:#FFFFFF;display:inline-block;font-family:'Arial', Arial, Sans-serif;font-size:16px;font-weight:400;mso-border-alt:none;padding-bottom:10px;padding-top:10px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;\"" +
-            "       href=\"http://daqingniu.com/codeless/link/click?refid=emailrefid&clid=b1clid\"><span" +
+            "       href=\"http://49.232.70.73/api/codeless/link/click?refid=emailrefid&clid=b1clid\"><span" +
             "            style=\"word-break: break-word; padding-left: 44px; padding-right: 44px; font-size: 16px; display: inline-block; letter-spacing: normal;\"><span" +
             "            style=\"word-break: break-word; line-height: 24px;\">点开看看</span></span></a>" +
             "" +
             "    <a target=\"_blank\"" +
             "       style=\"background-color:#909399;border-bottom:0px solid #909399;border-left:0px solid #909399;border-radius:4px;border-right:0px solid #909399;border-top:0px solid #009B5B;color:#FFFFFF;display:inline-block;font-family:'Arial', Arial, Sans-serif;font-size:16px;font-weight:400;mso-border-alt:none;padding-bottom:10px;padding-top:10px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;\"" +
-            "       href=\"http://daqingniu.com/codeless/link/click?refid=emailrefid&clid=b2clid\"><span" +
+            "       href=\"http://49.232.70.73/api/codeless/link/click?refid=emailrefid&clid=b2clid\"><span" +
             "            style=\"word-break: break-word; padding-left: 44px; padding-right: 44px; font-size: 16px; display: inline-block; letter-spacing: normal;\"><span" +
             "            style=\"word-break: break-word; line-height: 24px;\">不感兴趣</span></span></a>" +
             "</div>>" +
@@ -134,7 +134,7 @@ public class LinkManageServiceImpl extends ServiceImpl<PromotionLinkMapper, Prom
                 PromotionLink link = new PromotionLink();
                 link.setBusinessCode(businessCode);
                 link.setCustomerEmail(email);
-                link.setRefId(WEB_REF_ID);
+                link.setRefId(EMAIL_REF_ID);
                 link.setClIdForButton1(IdUtil.simpleUUID());
                 link.setClIdForButton2(IdUtil.simpleUUID());
                 link.setCreateTime(now);
@@ -144,7 +144,7 @@ public class LinkManageServiceImpl extends ServiceImpl<PromotionLinkMapper, Prom
             PromotionLink link = new PromotionLink();
             link.setBusinessCode(businessCode);
             link.setCustomerEmail(null);
-            link.setRefId(EMAIL_REF_ID);
+            link.setRefId(WEB_REF_ID);
             link.setClIdForButton1(IdUtil.simpleUUID());
             link.setClIdForButton2(IdUtil.simpleUUID());
             link.setCreateTime(now);
@@ -159,8 +159,8 @@ public class LinkManageServiceImpl extends ServiceImpl<PromotionLinkMapper, Prom
     public GenerateEmailAndWebUrlResp generateText(GenerateEmailAndWebUrlReq req) {
         GenerateEmailAndWebUrlResp resp = new GenerateEmailAndWebUrlResp();
         resp.setEmailText(EMAIL_TEXT_TEMPLATE.replace("emailrefid", EMAIL_REF_ID).replace("b1clid", req.getClIdForButton1()).replace("b2clid", req.getClIdForButton2()));
-        resp.setEmailText(StringEscapeUtils.unescapeJava(resp.getEmailText()));
-        resp.setWebUrl(WEB_URL_TEMPLATE);
+        resp.setEmailText(resp.getEmailText().replace("\"", "'"));
+        resp.setWebUrl(WEB_URL_TEMPLATE.replace("ccclid1", req.getClIdForButton1()).replace("ccclid2", req.getClIdForButton2()));
         return resp;
     }
 

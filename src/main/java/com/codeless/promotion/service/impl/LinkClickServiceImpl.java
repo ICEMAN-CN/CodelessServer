@@ -344,7 +344,7 @@ public class LinkClickServiceImpl extends ServiceImpl<PromotionLinkClickMapper, 
      */
     @Override
     public void manualUpdateStatisticsData() {
-        this.calculateDayStatisticsData2();
+//        this.calculateDayStatisticsData2();
         this.calculateTotalStatisticsData();
     }
 

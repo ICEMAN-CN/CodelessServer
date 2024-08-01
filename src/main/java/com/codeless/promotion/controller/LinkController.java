@@ -90,6 +90,7 @@ public class LinkController {
         if (!req.isValid()) {
             throw new ServiceException(BAD_REQUEST);
         }
+        req.setPageIndex(req.getPageIndex() - 1);
         PromotionLinkListResp resp = manageService.getPromotionLinkList(req);
         if (resp == null) {
             log.error("PromotionLinkList is null");
