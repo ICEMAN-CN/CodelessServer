@@ -11,4 +11,5 @@ public interface LinkClickService extends IService<PromotionLinkClick> {
 
     void processPromotionLinkClick(PromotionLinkClick point);
 
+    void manualUpdateStatisticsData();
 }

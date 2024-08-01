@@ -25,7 +25,7 @@ public class PromotionLinkClick implements Serializable {
     private Long id;
 
     @TableField(value = "customer_email")
-    @ApiModelProperty("客户邮件")
+    @ApiModelProperty("客户邮箱")
     private String customerEmail;
 
 //    @TableField(value = "anonymous_customer_id")
@@ -35,6 +35,10 @@ public class PromotionLinkClick implements Serializable {
     @TableField(value = "clid")
     @ApiModelProperty("推广链接的唯一标识")
     private String clId;
+
+    @TableField(value = "clid_button")
+    @ApiModelProperty("推广链接的唯一标识对应的按钮编号")
+    private Integer clIdButton;
 
     @TableField(value = "refid")
     @ApiModelProperty("推广链接来源标识，用于标记链接来源渠道：邮件、网页")

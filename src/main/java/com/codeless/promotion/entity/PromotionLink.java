@@ -40,7 +40,7 @@ public class PromotionLink implements Serializable {
     private String refId;
 
     @TableField(value = "customer_email")
-    @ApiModelProperty("客户邮件")
+    @ApiModelProperty("客户邮箱")
     private String customerEmail;
 
     // @wdy todo 预留字段，固定为abc

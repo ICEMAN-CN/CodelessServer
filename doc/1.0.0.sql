@@ -26,6 +26,7 @@ CREATE TABLE `promotion_link_click` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY  COMMENT 'ID',
     `customer_email` VARCHAR(255) COMMENT '客户邮件',
     `clid` VARCHAR(255) COMMENT '推广链接的唯一标识',
+    `clid_button` INT COMMENT '推广链接的唯一标识对应的按钮编号',
     `refid` VARCHAR(255) COMMENT '推广链接来源标识，用于标记链接来源渠道：邮件、网页',
     `business_code` VARCHAR(255) COMMENT '业务码，用于标识业务',
     `ip_address` VARCHAR(255) COMMENT '客户IP地址',
@@ -35,3 +36,136 @@ CREATE TABLE `promotion_link_click` (
      INDEX `idx_refid` (`refid`),
      INDEX `idx_business_code` (`business_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 重复打开 天粒度不同业务不同来源的按钮点击pv和uv
+SELECT
+    clid_button,
+    refid,
+    business_code,
+    count( 1 ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+where create_time >= "2024-07-31 00:00:00" and create_time <= "2024-08-01 00:00:00"
+GROUP BY
+    clid_button,refid, business_code
+ORDER BY business_code desc
+
+-- 重复打开 天粒度不同业务不同来源的页面打开pc uv
+SELECT
+    refid,
+    business_code,
+    count( 1 ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+where create_time >= "2024-07-31 00:00:00" and create_time <= "2024-08-01 00:00:00"
+GROUP BY
+    refid, business_code
+ORDER BY business_code desc
+
+-- 重复打开 总不同业务不同来源的按钮点击pv和uv
+SELECT
+    clid_button,
+    refid,
+    business_code,
+    count( 1 ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+GROUP BY
+    clid_button,refid, business_code
+ORDER BY business_code desc
+
+-- 重复打开 总不同业务不同来源的页面打开pc uv
+SELECT
+    refid,
+    business_code,
+    count( 1 ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+GROUP BY
+    refid, business_code
+ORDER BY business_code desc
+
+
+-----
+-- 单次打开 天粒度不同业务不同来源的按钮点击pv和uv
+SELECT
+    clid_button,
+    refid,
+    business_code,
+    count(DISTINCT( clid ) ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+where create_time >= "2024-07-31 00:00:00" and create_time <= "2024-08-01 00:00:00"
+GROUP BY
+    clid_button,refid, business_code
+ORDER BY business_code desc
+
+-- 单次打开 天粒度不同业务不同来源的页面打开pc uv
+SELECT
+    refid,
+    business_code,
+    count(DISTINCT( clid ) ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+where create_time >= "2024-07-31 00:00:00" and create_time <= "2024-08-01 00:00:00"
+GROUP BY
+    refid, business_code
+ORDER BY business_code desc
+
+-- 单次打开 总不同业务不同来源的按钮点击pv和uv
+SELECT
+    clid_button,
+    refid,
+    business_code,
+    count(DISTINCT( clid ) ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+GROUP BY
+    clid_button,refid, business_code
+ORDER BY business_code desc
+
+-- 单次打开 总不同业务不同来源的页面打开pc uv
+SELECT
+    refid,
+    business_code,
+    count(DISTINCT( clid ) ) AS pv,
+    count(DISTINCT ( customer_email )) AS uv
+FROM
+    promotion_link_click
+GROUP BY
+    refid, business_code
+ORDER BY business_code desc
+
+
+----总 同一个邮箱打开多次   邮箱打开次数排名倒序和邮箱信息   按钮1 按钮2 总
+----总打开
+SELECT
+    customer_email,
+    refid,
+    business_code,
+    count(clid) AS pv
+FROM
+    promotion_link_click
+GROUP BY
+    refid, business_code, customer_email
+ORDER BY pv desc
+
+---- 分按钮
+SELECT
+    clid_button,
+    customer_email,
+    refid,
+    business_code,
+    count(clid) AS pv
+FROM
+    promotion_link_click
+GROUP BY
+    refid, business_code, customer_email,clid_button
+ORDER BY pv desc

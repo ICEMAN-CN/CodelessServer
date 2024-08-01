@@ -137,6 +137,6 @@ knife4j:
 
 # ====================RocketMq=========================
 rocketmq:
-  name-server: 49.232.70.73:9876
+  name-server: 110.249.144.110:9876
   producer:
     group: GameSkyComment

@@ -11,4 +11,172 @@
         </foreach>
     </insert>
 
+    <!-- 重复打开 天粒度不同业务不同来源的按钮点击pv和uv -->
+    <select id="repeatOpenButtonDay" parameterType="String" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            clid_button as clidButton,
+            refid as refid,
+            business_code as businessCode,
+            count( 1 ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        where
+            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>
+          and
+            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>
+        GROUP BY
+            clid_button,
+            refid,
+            business_code
+        ORDER BY
+            business_code DESC
+    </select>
+
+    <!--  重复打开 天粒度不同业务不同来源的页面打开pv和uv  -->
+    <select id="repeatOpenRefDay" parameterType="String" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            refid as refid,
+            business_code as businessCode,
+            count( 1 ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        where
+            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>
+          and
+            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>
+        GROUP BY
+            refid, business_code
+        ORDER BY
+            business_code desc
+    </select>
+
+    <!--  重复打开 总不同业务不同来源的按钮点击pv和uv  -->
+    <select id="repeatOpenButtonTotal" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            clid_button as clidButton,
+            refid as refid,
+            business_code as businessCode,
+            count( 1 ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        GROUP BY
+            clid_button,refid, business_code
+        ORDER BY business_code desc
+    </select>
+
+    <!--  重复打开 总不同业务不同来源的页面打开pv和uv  -->
+    <select id="repeatOpenRefTotal" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            refid as refid,
+            business_code as businessCode,
+            count( 1 ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        GROUP BY
+            refid, business_code
+        ORDER BY business_code desc
+    </select>
+
+
+    <!--  单次打开 天粒度不同业务不同来源的按钮点击pv和uv  -->
+    <select id="firstOpenButtonDay" parameterType="String" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            clid_button as clidButton,
+            refid as refid,
+            business_code as businessCode,
+            count(DISTINCT( clid ) ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        where
+            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>
+          and
+            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>
+        GROUP BY
+            clid_button,refid, business_code
+        ORDER BY
+            business_code desc
+    </select>
+
+    <!--  单次打开 天粒度不同业务不同来源的页面打开pv和uv  -->
+    <select id="firstOpenRefDay" parameterType="String" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            refid as refid,
+            business_code as businessCode,
+            count(DISTINCT( clid ) ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        where
+            <![CDATA[create_time >= str_to_date( #{begin},'%Y-%m-%d %H:%i:%s')]]>
+          and
+            <![CDATA[create_time <= str_to_date( #{end},'%Y-%m-%d %H:%i:%s')]]>
+        GROUP BY
+            refid, business_code
+        ORDER BY 
+            business_code desc
+    </select>
+
+    <!--  单次打开 总不同业务不同来源的按钮点击pv和uv  -->
+    <select id="firstOpenButtonTotal" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            clid_button as clidButton,
+            refid as refid,
+            business_code as businessCode,
+            count(DISTINCT( clid ) ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        GROUP BY
+            clid_button, refid, business_code
+        ORDER BY business_code desc
+    </select>
+
+    <!--  单次打开 总不同业务不同来源的页面打开pv和uv  -->
+    <select id="firstOpenRefTotal" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            refid as refid,
+            business_code as businessCode,
+            count(DISTINCT( clid ) ) AS pv,
+            count(DISTINCT ( customer_email )) AS uv
+        FROM
+            promotion_link_click
+        GROUP BY
+            refid, business_code
+        ORDER BY business_code desc
+
+    </select>
+
+    <!--  同一个邮箱打开多次   邮箱打开次数排名倒序和邮箱信息   按钮1 按钮2 总  -->
+    <select id="emailClickTotal" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            customer_email,
+            refid as refid,
+            business_code as businessCode,
+            count(clid) AS pv
+        FROM
+            promotion_link_click
+        GROUP BY
+            refid, business_code, customer_email
+        ORDER BY pv desc
+    </select>
+
+    <!--  同一个邮箱打开多次   邮箱打开次数排名倒序和邮箱信息   按钮1 按钮2 总  -->
+    <select id="emailClickButtonTotal" resultType="com.codeless.promotion.entity.ClickStatistics">
+        SELECT
+            clid_button as clidButton,
+            customer_email,
+            refid as refid,
+            business_code as businessCode,
+            count(clid) AS pv
+        FROM
+            promotion_link_click
+        GROUP BY
+            refid, business_code, customer_email, clid_button
+        ORDER BY pv desc
+    </select>
 </mapper>

@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 public class PromotionLinkClickMsg {
 
-    @ApiModelProperty("客户邮件")
+    @ApiModelProperty("客户邮箱")
     private String customerEmail;
 
     @ApiModelProperty("匿名客户ID，用于web端的点击采集")

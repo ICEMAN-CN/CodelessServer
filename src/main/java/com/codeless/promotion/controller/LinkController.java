@@ -117,6 +117,13 @@ public class LinkController {
     }
 
 
+    @ApiOperation("手动触发统计更新")
+    @GetMapping("/manualStatistics")
+    public JsonResult<String> manualStatistics() {
+        clickService.manualUpdateStatisticsData();
+        return JsonResult.ok("ok");
+    }
+
 
 
 }
